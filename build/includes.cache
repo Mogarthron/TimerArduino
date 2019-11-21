@@ -26,11 +26,6 @@
   },
   {
     "Sourcefile": "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\build\\sketch\\Czasuwka.ino.cpp",
-    "Include": "EEPROM.h",
-    "Includepath": "D:\\Programy\\Arduino\\hardware\\arduino\\avr\\libraries\\EEPROM\\src"
-  },
-  {
-    "Sourcefile": "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\build\\sketch\\Czasuwka.ino.cpp",
     "Include": "",
     "Includepath": ""
   },

@@ -16,5 +16,4 @@ d:\Dev\Programowanie\Arduino\Czasowka\build\sketch\Czasuwka.ino.cpp.o: \
  C:\Users\witlu\OneDrive\Dokumenty\Arduino\libraries\LiquidCrystal_I2C-1.1.2/LiquidCrystal_I2C.h \
  D:\Programy\Arduino\hardware\arduino\avr\cores\arduino/Print.h \
  C:\Users\witlu\OneDrive\Dokumenty\Arduino\libraries\Keypad-3.1.1\src/Keypad.h \
- C:\Users\witlu\OneDrive\Dokumenty\Arduino\libraries\Keypad-3.1.1\src/Key.h \
- D:\Programy\Arduino\hardware\arduino\avr\libraries\EEPROM\src/EEPROM.h
+ C:\Users\witlu\OneDrive\Dokumenty\Arduino\libraries\Keypad-3.1.1\src/Key.h

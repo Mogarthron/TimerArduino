@@ -3,7 +3,6 @@
 # 2 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino" 2
 # 3 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino" 2
 # 4 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino" 2
-# 5 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino" 2
 
 const byte ROWS = 4; //number of rows
 const byte COLS = 4; //number of columns
@@ -26,7 +25,7 @@ D4 - keypad6
 D9 - keypad1
 
 */
-# 21 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+# 20 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
 byte rowPins[ROWS] = {2, 3, 4, 5}; //connect to the row pinouts of the keypad
 byte colPins[COLS] = {6, 7, 8, 9}; //connect to the column pinouts of the keypad
 
@@ -35,16 +34,11 @@ Keypad keypad = Keypad(((char*)keys), rowPins, colPins, ROWS, COLS);
 /*SCL - A5
 
   SDA - A4*/
-# 28 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
-LiquidCrystal_I2C lcd(0x27, 20, 4); // set the LCD address to 0x27 for a 16 chars and 4 line display
+# 27 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+LiquidCrystal_I2C lcd(0x27, 20, 4); // set the LCD i2c address to 0x27, for a 20 chars and 4 line display
 
 unsigned long actTime = millis();
 unsigned long lastTime;
-
-//EEPROM comfig
-int WorkAdress = 0;
-int NotWorkAdress = sizeof(unsigned long);
-int CountAdress = NotWorkAdress + sizeof(unsigned long);
 
 struct WorkSetup
 {
@@ -54,6 +48,8 @@ struct WorkSetup
 };
 
 WorkSetup WS = {10, 90, 0};
+
+int tryb;
 
 ////////////////////////////////////Setup and Loop////////////////////////////////////////////
 void setup()
@@ -67,6 +63,8 @@ void setup()
  lcd.init(); // initialize the lcd
  lcd.backlight(); // light the screen
  lcd.noAutoscroll();
+
+ tryb = 0;
 }
 
 void loop()
@@ -84,9 +82,11 @@ void Menu()
   lcd.setCursor(0, 0);
   lcd.print("Menu:");
   lcd.setCursor(0, 1);
-  lcd.print("Auto (A)");
+  lcd.print("Auto 1 (A)");
   lcd.setCursor(0, 2);
-  lcd.print("Reka (B)");
+  lcd.print("Auto 2 (B)");
+  lcd.setCursor(0, 3);
+  lcd.print("Reka (C)");
 
   char key = keypad.getKey();
 
@@ -95,9 +95,16 @@ void Menu()
    if (key == 'A')
    {
     lcd.clear();
-    Auto();
+    CountDown0();
+    tryb = 0;
    }
    if (key == 'B')
+   {
+    lcd.clear();
+    CountDown1();
+    tryb = 1;
+   }
+   if (key == 'C')
    {
     lcd.clear();
     Manual();
@@ -106,12 +113,24 @@ void Menu()
  }
 }
 
-void Auto()
+// void Auto()
+// {
+// 	CountDown(tryb);
+// }
+
+void CountDown(int i)
 {
- CountDown();
+ if (i = 0)
+ {
+  CountDown0();
+ }
+ else
+ {
+  CountDown1();
+ }
 }
 
-void CountDown()
+void CountDown0()
 {
  unsigned long _work = WS.work;
  unsigned long _notWork = WS.notWork;
@@ -149,24 +168,59 @@ void CountDown()
  }
 }
 
+void CountDown1()
+{
+ unsigned long _work = WS.work;
+ unsigned long _notWork = WS.notWork;
+
+ while (true)
+ {
+  while (true)
+  {
+   ScreenAndLoop(_work, _notWork);
+
+   if (_work > 1)
+   {
+    digitalWrite(10, 0x1);
+    _work--;
+   }
+
+   _notWork--;
+
+   if (_work <= 1)
+   {
+    _work = 0;
+    digitalWrite(10, 0x0);
+   }
+   if (_notWork <= 0)
+   {
+    _work = WS.work;
+    _notWork = WS.notWork;
+    break;
+   }
+  }
+ }
+}
+
 void ScreenAndLoop(unsigned long val, unsigned long val2)
 {
  Screen(val, val2);
- /*for (int i = 0; i <= 10; i++)
+ for (int i = 0; i <= 10; i++)
+ {
+  MenuAuto();
+  delay(100);
+ }
+
+ /*if ((actTime - lastTime) <= 1000)
 
 	{
 
 		MenuAuto();
 
-		delay(100);
+		lastTime = actTime;
 
 	}*/
-# 150 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
- if ((actTime - lastTime) <= 1000)
- {
-  MenuAuto();
-  lastTime = actTime;
- }
+# 208 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
 }
 
 void Manual()
@@ -273,7 +327,7 @@ void SetUp()
    if (key == 'D')
    {
     lcd.clear();
-    CountDown();
+    CountDown(tryb);
    }
   }
  }
@@ -284,7 +338,7 @@ void SetUpScreen()
  lcd.setCursor(0, 0);
  lcd.print("Nastawy: ");
  lcd.setCursor(0, 1);
- lcd.print("(A) - Praca");
+ lcd.print("(A) - Zasyp");
  lcd.setCursor(0, 2);
  lcd.print("(B) - Przerwa");
  lcd.setCursor(0, 3);
@@ -293,7 +347,7 @@ void SetUpScreen()
 
 int GetVal(String str)
 {
- String msg = "Czas " + str + ": 1-9999s";
+ String msg = "Czas " + str + ": 1-120s";
  String val = "";
  int num = 0;
 
@@ -327,6 +381,16 @@ int GetVal(String str)
   }
  }
  lcd.clear();
+
+ if (num > 120)
+ {
+  num = 120;
+ }
+ if (num <= 1)
+ {
+  num = 1;
+ }
+
  return num;
 }
 
@@ -413,6 +477,10 @@ String ConvertToString(unsigned long v)
 {
  String str = String(v, 10);
 
+ if (v < 100 && v >= 10)
+ {
+  str = str + " ";
+ }
  if (v < 10)
  {
   str = "0" + str;
