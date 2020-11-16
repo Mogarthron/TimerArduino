@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#line 1 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
-#line 1 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 1 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
+#line 1 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <Keypad.h>
@@ -41,44 +41,44 @@ struct WorkSetup
 
 WorkSetup WS = {10, 90, 0};
 
-int tryb;
+bool tryb;
 
 ////////////////////////////////////Setup and Loop////////////////////////////////////////////
-#line 44 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 44 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void setup();
-#line 59 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 59 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void loop();
-#line 65 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 65 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void Menu();
-#line 110 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
-void CountDown(int i);
-#line 122 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 110 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
+void CountDown(bool i);
+#line 122 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void CountDown0();
-#line 160 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 160 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void CountDown1();
-#line 194 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 194 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void ScreenAndLoop(unsigned long val, unsigned long val2);
-#line 210 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 210 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void Manual();
-#line 253 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 253 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void HCS();
-#line 265 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 265 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void HCSWork();
-#line 277 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 277 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void HCSBreak();
-#line 289 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 289 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void SetUp();
-#line 320 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 320 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void SetUpScreen();
-#line 332 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 332 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 int GetVal(String str);
-#line 381 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 381 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void MenuAuto();
-#line 432 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 432 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void Screen(unsigned long s, unsigned long p);
-#line 460 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 460 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 String ConvertToString(unsigned long v);
-#line 44 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+#line 44 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 void setup()
 {
 	//WS.count = EEPROM.get(CountAdress, )
@@ -123,13 +123,13 @@ void Menu()
 			{
 				lcd.clear();
 				CountDown0();
-				tryb = 0;
+				tryb = false;
 			}
 			if (key == 'B')
 			{
 				lcd.clear();
 				CountDown1();
-				tryb = 1;
+				tryb = true;
 			}
 			if (key == 'C')
 			{
@@ -145,13 +145,13 @@ void Menu()
 // 	CountDown(tryb);
 // }
 
-void CountDown(int i)
+void CountDown(bool i)
 {
-	if (i = 0)
+	if (i == false)
 	{
 		CountDown0();
 	}
-	else
+	if (i == true)
 	{
 		CountDown1();
 	}

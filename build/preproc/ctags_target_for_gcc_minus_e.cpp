@@ -1,8 +1,8 @@
-# 1 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
-# 1 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
-# 2 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino" 2
-# 3 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino" 2
-# 4 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino" 2
+# 1 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
+# 1 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
+# 2 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino" 2
+# 3 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino" 2
+# 4 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino" 2
 
 const byte ROWS = 4; //number of rows
 const byte COLS = 4; //number of columns
@@ -25,7 +25,7 @@ D4 - keypad6
 D9 - keypad1
 
 */
-# 20 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+# 20 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 byte rowPins[ROWS] = {2, 3, 4, 5}; //connect to the row pinouts of the keypad
 byte colPins[COLS] = {6, 7, 8, 9}; //connect to the column pinouts of the keypad
 
@@ -34,7 +34,7 @@ Keypad keypad = Keypad(((char*)keys), rowPins, colPins, ROWS, COLS);
 /*SCL - A5
 
   SDA - A4*/
-# 27 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+# 27 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 LiquidCrystal_I2C lcd(0x27, 20, 4); // set the LCD i2c address to 0x27, for a 20 chars and 4 line display
 
 unsigned long actTime = millis();
@@ -49,7 +49,7 @@ struct WorkSetup
 
 WorkSetup WS = {10, 90, 0};
 
-int tryb;
+bool tryb;
 
 ////////////////////////////////////Setup and Loop////////////////////////////////////////////
 void setup()
@@ -96,13 +96,13 @@ void Menu()
    {
     lcd.clear();
     CountDown0();
-    tryb = 0;
+    tryb = false;
    }
    if (key == 'B')
    {
     lcd.clear();
     CountDown1();
-    tryb = 1;
+    tryb = true;
    }
    if (key == 'C')
    {
@@ -118,13 +118,13 @@ void Menu()
 // 	CountDown(tryb);
 // }
 
-void CountDown(int i)
+void CountDown(bool i)
 {
- if (i = 0)
+ if (i == false)
  {
   CountDown0();
  }
- else
+ if (i == true)
  {
   CountDown1();
  }
@@ -220,7 +220,7 @@ void ScreenAndLoop(unsigned long val, unsigned long val2)
 		lastTime = actTime;
 
 	}*/
-# 208 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka.ino"
+# 208 "d:\\Dev\\Programowanie\\Arduino\\Czasowka\\Czasuwka\\Czasuwka.ino"
 }
 
 void Manual()
